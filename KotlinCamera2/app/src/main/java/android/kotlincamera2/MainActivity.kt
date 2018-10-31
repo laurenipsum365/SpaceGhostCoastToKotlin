@@ -66,9 +66,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 if (scale <= 0) {
                     // appbar is completely collapsed
                     appBarCollapsed = true
-                    setTitle(R.string.app_name)
+                   // setTitle(R.string.app_name)
                 } else if (appBarCollapsed) {
-                    setTitle("")
+                   // setTitle("")
                     appBarCollapsed = false
                 }
 

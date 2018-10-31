@@ -3,6 +3,7 @@ package android.kotlincamera2.adapters
 import android.content.Context
 import android.kotlincamera2.R
 import android.kotlincamera2.models.EpisodeItem
+import android.kotlincamera2.utils.UiUtils
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +19,13 @@ class EpisodeAdapter(val episodes: List<EpisodeItem>, val context: Context) : Re
         val item = episodes.get(position)
         holder?.title?.text = "Episode " + item.getEpisodeNumber() + ": " + item.getTitle()
         holder?.image?.setImageResource(R.drawable.default_background)
+
+        holder?.cardView.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(p0: View?) {
+                println(item.getVideoUrl())
+                UiUtils.showAlertDialog(context, null, item.getVideoUrl())
+            }
+        })
     }
 
 
@@ -30,4 +38,5 @@ class EpisodeAdapter(val episodes: List<EpisodeItem>, val context: Context) : Re
 class EpisodeItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val title = view.episodeTitle
     val image = view.characterProfileImage
+    val cardView = view.cardView
 }

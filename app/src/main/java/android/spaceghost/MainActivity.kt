@@ -3,6 +3,7 @@ package android.spaceghost
 import android.os.Bundle
 import android.spaceghost.adapters.EpisodeAdapter
 import android.spaceghost.models.EpisodeItem
+import android.spaceghost.utils.UiUtils
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
@@ -14,7 +15,11 @@ import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, EpisodeAdapter.EpisodeClickListener {
+    // Click Listener for episode items in RecyclerView adapter
+    override fun onEpisodeClicked(url: String?, title: String?) {
+        UiUtils.showAlertDialog(this, null, "$title: $url")
+    }
 
     private val episodes: ArrayList<EpisodeItem> = ArrayList()
 
@@ -38,7 +43,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         episodeRecyclerView.layoutManager = LinearLayoutManager(this)
 
         // Access the RecyclerView Adapter and load the data into it
-        episodeRecyclerView.adapter = EpisodeAdapter(episodes, this)
+        episodeRecyclerView.adapter = EpisodeAdapter(episodes, this, this)
 
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)

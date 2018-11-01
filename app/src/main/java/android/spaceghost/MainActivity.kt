@@ -1,9 +1,10 @@
 package android.spaceghost
 
+import android.content.Intent
 import android.os.Bundle
+import android.spaceghost.activities.WebViewActivity
 import android.spaceghost.adapters.EpisodeAdapter
 import android.spaceghost.models.EpisodeItem
-import android.spaceghost.utils.UiUtils
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
@@ -16,25 +17,23 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, EpisodeAdapter.EpisodeClickListener {
-    // Click Listener for episode items in RecyclerView adapter
-    override fun onEpisodeClicked(url: String?, title: String?) {
-        UiUtils.showAlertDialog(this, null, "$title: $url")
-    }
+
+    //---------------------------------------------//
+    // Instance Variables
+    //---------------------------------------------//
 
     private val episodes: ArrayList<EpisodeItem> = ArrayList()
-
     private var appBarCollapsed: Boolean = false
+
+    //---------------------------------------------//
+    // Activity Lifecycle
+    //---------------------------------------------//
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-        setTitle(R.string.app_name)
-
-//        fabMenu.setOnClickListener { view ->
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                    .setAction("Action", null).show()
-//        }
+        setTitle("")
 
         // load urls from adult swim website into array of EpisodeItems
         addEpisodes()
@@ -71,9 +70,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 if (scale <= 0) {
                     // appbar is completely collapsed
                     appBarCollapsed = true
-                   // setTitle(R.string.app_name)
+                    setTitle(R.string.app_name)
                 } else if (appBarCollapsed) {
-                   // setTitle("")
+                    setTitle("")
                     appBarCollapsed = false
                 }
 
@@ -81,22 +80,25 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         })
     }
 
+    fun handleEpisodeClicked(episodeItem: EpisodeItem) {
+        val intent = Intent(this, WebViewActivity::class.java)
+        intent.putExtra(WebViewActivity.VIDEO_OBJECT_URL, episodeItem.getVideoUrl())
+        startActivity(intent)
+    }
+
     fun addEpisodes() {
-        episodes.add(EpisodeItem("http://www.adultswim.com/videos/space-ghost-coast-to-coast/spanish-translation/", 1))
-        episodes.add(EpisodeItem("http://www.adultswim.com/videos/space-ghost-coast-to-coast/hungry/", 2))
-        episodes.add(EpisodeItem("http://www.adultswim.com/videos/space-ghost-coast-to-coast/elevator/", 3))
-        episodes.add(EpisodeItem("http://www.adultswim.com/videos/space-ghost-coast-to-coast/elevator/", 3))
-        episodes.add(EpisodeItem("http://www.adultswim.com/videos/space-ghost-coast-to-coast/elevator/", 3))
-        episodes.add(EpisodeItem("http://www.adultswim.com/videos/space-ghost-coast-to-coast/elevator/", 3))
-        episodes.add(EpisodeItem("http://www.adultswim.com/videos/space-ghost-coast-to-coast/elevator/", 3))
-        episodes.add(EpisodeItem("http://www.adultswim.com/videos/space-ghost-coast-to-coast/elevator/", 3))
-        episodes.add(EpisodeItem("http://www.adultswim.com/videos/space-ghost-coast-to-coast/elevator/", 3))
-        episodes.add(EpisodeItem("http://www.adultswim.com/videos/space-ghost-coast-to-coast/elevator/", 3))
-        episodes.add(EpisodeItem("http://www.adultswim.com/videos/space-ghost-coast-to-coast/elevator/", 3))
-        episodes.add(EpisodeItem("http://www.adultswim.com/videos/space-ghost-coast-to-coast/elevator/", 3))
-        episodes.add(EpisodeItem("http://www.adultswim.com/videos/space-ghost-coast-to-coast/elevator/", 3))
-        episodes.add(EpisodeItem("http://www.adultswim.com/videos/space-ghost-coast-to-coast/elevator/", 3))
-        episodes.add(EpisodeItem("http://www.adultswim.com/videos/space-ghost-coast-to-coast/elevator/", 3))
+        episodes.add(EpisodeItem("http://www.adultswim.com/videos/space-ghost-coast-to-coast/spanish-translation/", "Spanish Translation"))
+        episodes.add(EpisodeItem("http://www.adultswim.com/videos/space-ghost-coast-to-coast/hungry/", "Hungry"))
+        episodes.add(EpisodeItem("http://www.adultswim.com/videos/space-ghost-coast-to-coast/elevator/", "Elevator"))
+        episodes.add(EpisodeItem("http://www.adultswim.com/videos/space-ghost-coast-to-coast/spanish-translation/", "Spanish Translation"))
+        episodes.add(EpisodeItem("http://www.adultswim.com/videos/space-ghost-coast-to-coast/hungry/", "Hungry"))
+        episodes.add(EpisodeItem("http://www.adultswim.com/videos/space-ghost-coast-to-coast/elevator/", "Elevator"))
+        episodes.add(EpisodeItem("http://www.adultswim.com/videos/space-ghost-coast-to-coast/spanish-translation/", "Spanish Translation"))
+        episodes.add(EpisodeItem("http://www.adultswim.com/videos/space-ghost-coast-to-coast/hungry/", "Hungry"))
+        episodes.add(EpisodeItem("http://www.adultswim.com/videos/space-ghost-coast-to-coast/elevator/", "Elevator"))
+        episodes.add(EpisodeItem("http://www.adultswim.com/videos/space-ghost-coast-to-coast/spanish-translation/", "Spanish Translation"))
+        episodes.add(EpisodeItem("http://www.adultswim.com/videos/space-ghost-coast-to-coast/hungry/", "Hungry"))
+        episodes.add(EpisodeItem("http://www.adultswim.com/videos/space-ghost-coast-to-coast/elevator/", "Elevator"))
     }
 
     override fun onBackPressed() {
@@ -148,5 +150,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+
+    //---------------------------------------------//
+    // Click Listeners
+    //---------------------------------------------//
+
+    // Click Listener for episode items in RecyclerView adapter
+    override fun onEpisodeClicked(episodeItem: EpisodeItem) {
+        handleEpisodeClicked(episodeItem)
     }
 }

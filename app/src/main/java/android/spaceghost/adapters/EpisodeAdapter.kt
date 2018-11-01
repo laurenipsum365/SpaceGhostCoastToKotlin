@@ -16,7 +16,7 @@ class EpisodeAdapter(val episodes: List<EpisodeItem>, val context: Context, val 
     }
 
     open interface EpisodeClickListener {
-        fun onEpisodeClicked(url: String?, title: String?)
+        fun onEpisodeClicked(episode: EpisodeItem)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EpisodeItemViewHolder {
@@ -35,7 +35,7 @@ class EpisodeAdapter(val episodes: List<EpisodeItem>, val context: Context, val 
             override fun onClick(p0: View?) {
                 println(item.getVideoUrl())
                 if (mClickListener != null) {
-                    mClickListener?.onEpisodeClicked(item.getVideoUrl(), item.getTitle())
+                    mClickListener?.onEpisodeClicked(item)
                 }
             }
         })

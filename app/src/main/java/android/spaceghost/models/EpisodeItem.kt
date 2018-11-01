@@ -1,17 +1,17 @@
 package android.spaceghost.models
 
-class EpisodeItem(url: String?, episodeNumber: Int?) {
+class EpisodeItem(url: String?, title: String?) {
     private var title: String? = null
     private var videoUrl: String? = null
     private var seasonNumber: Int? = null
     private var episodeNumber: Int? = null
 
     init {
-        this.videoUrl = url;
-        this.title = titleFromUrl(url)
-        this.episodeNumber = episodeNumber
+        this.videoUrl = url
+        this.title = title
     }
 
+    // This would have worked when using urls straight from adultswim website - using youtube now
     fun titleFromUrl(url: String?) : String? {
         var title = ""
 

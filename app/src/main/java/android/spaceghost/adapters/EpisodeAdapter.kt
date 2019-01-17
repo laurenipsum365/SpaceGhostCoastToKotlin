@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.list_item_episode.view.*
 
-class EpisodeAdapter(val episodes: List<EpisodeItem>, val context: Context, val episodeClickListener: EpisodeClickListener) : RecyclerView.Adapter<EpisodeItemViewHolder>() {
+class EpisodeAdapter(val episodes: List<EpisodeItem>, val context: Context?, val episodeClickListener: EpisodeClickListener) : RecyclerView.Adapter<EpisodeItemViewHolder>() {
 
     companion object {
         var mClickListener: EpisodeClickListener? = null

@@ -1,28 +1,23 @@
 package android.spaceghost
 
-import android.content.Intent
+import EpisodeListFragment
 import android.os.Bundle
-import android.spaceghost.activities.WebViewActivity
-import android.spaceghost.adapters.EpisodeAdapter
-import android.spaceghost.models.EpisodeItem
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, EpisodeAdapter.EpisodeClickListener {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     //---------------------------------------------//
     // Instance Variables
     //---------------------------------------------//
 
-    private val episodes: ArrayList<EpisodeItem> = ArrayList()
     private var appBarCollapsed: Boolean = false
 
     //---------------------------------------------//
@@ -35,14 +30,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setSupportActionBar(toolbar)
         setTitle("")
 
-        // load urls from adult swim website into array of EpisodeItems
-        addEpisodes()
+        // Add Episode List Fragment
+        supportFragmentManager
+                .beginTransaction()
+                .add(R.id.fragmentContainer, EpisodeListFragment.newInstance(), "rageComicList")
+                .commit()
 
-        // Creates a vertical Layout Manager
-        episodeRecyclerView.layoutManager = LinearLayoutManager(this)
-
-        // Access the RecyclerView Adapter and load the data into it
-        episodeRecyclerView.adapter = EpisodeAdapter(episodes, this, this)
 
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
@@ -54,9 +47,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // Listener for app bar collapsible layout
         appbar.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
+
             var scrollRange = -1
 
             override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
+
                 //Initialize the size of the scroll
                 if (scrollRange == -1) {
                     if (appBarLayout != null) {
@@ -78,27 +73,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             }
         })
-    }
-
-    fun handleEpisodeClicked(episodeItem: EpisodeItem) {
-        val intent = Intent(this, WebViewActivity::class.java)
-        intent.putExtra(WebViewActivity.VIDEO_OBJECT_URL, episodeItem.getVideoUrl())
-        startActivity(intent)
-    }
-
-    fun addEpisodes() {
-        episodes.add(EpisodeItem("http://www.adultswim.com/videos/space-ghost-coast-to-coast/spanish-translation/", "Spanish Translation"))
-        episodes.add(EpisodeItem("http://www.adultswim.com/videos/space-ghost-coast-to-coast/hungry/", "Hungry"))
-        episodes.add(EpisodeItem("http://www.adultswim.com/videos/space-ghost-coast-to-coast/elevator/", "Elevator"))
-        episodes.add(EpisodeItem("http://www.adultswim.com/videos/space-ghost-coast-to-coast/spanish-translation/", "Spanish Translation"))
-        episodes.add(EpisodeItem("http://www.adultswim.com/videos/space-ghost-coast-to-coast/hungry/", "Hungry"))
-        episodes.add(EpisodeItem("http://www.adultswim.com/videos/space-ghost-coast-to-coast/elevator/", "Elevator"))
-        episodes.add(EpisodeItem("http://www.adultswim.com/videos/space-ghost-coast-to-coast/spanish-translation/", "Spanish Translation"))
-        episodes.add(EpisodeItem("http://www.adultswim.com/videos/space-ghost-coast-to-coast/hungry/", "Hungry"))
-        episodes.add(EpisodeItem("http://www.adultswim.com/videos/space-ghost-coast-to-coast/elevator/", "Elevator"))
-        episodes.add(EpisodeItem("http://www.adultswim.com/videos/space-ghost-coast-to-coast/spanish-translation/", "Spanish Translation"))
-        episodes.add(EpisodeItem("http://www.adultswim.com/videos/space-ghost-coast-to-coast/hungry/", "Hungry"))
-        episodes.add(EpisodeItem("http://www.adultswim.com/videos/space-ghost-coast-to-coast/elevator/", "Elevator"))
     }
 
     override fun onBackPressed() {
@@ -152,13 +126,4 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
-
-    //---------------------------------------------//
-    // Click Listeners
-    //---------------------------------------------//
-
-    // Click Listener for episode items in RecyclerView adapter
-    override fun onEpisodeClicked(episodeItem: EpisodeItem) {
-        handleEpisodeClicked(episodeItem)
-    }
 }

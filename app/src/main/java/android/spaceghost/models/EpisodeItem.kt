@@ -1,24 +1,26 @@
 package android.spaceghost.models
 
-class EpisodeItem(url: String?, title: String?) {
+class EpisodeItem(id: String?, title: String?, episodeNumber: Int?, seasonNumber: Int?) {
     private var title: String? = null
-    private var videoUrl: String? = null
+    private var videoId: String? = null
     private var seasonNumber: Int? = null
     private var episodeNumber: Int? = null
 
     init {
-        this.videoUrl = url
+        this.videoId = id
         this.title = title
+        this.episodeNumber = episodeNumber
+        this.seasonNumber = seasonNumber
     }
 
-    // This would have worked when using urls straight from adultswim website - using youtube now
-    fun titleFromUrl(url: String?) : String? {
+    // This would have worked when using urls straight from adultswim website
+    fun titleFromUrl(url: String?): String? {
         var title = ""
 
         if (url != null) {
             if (url.contains("space-ghost-coast-to-coast")) {
                 var splitString = url.split("space-ghost-coast-to-coast/")
-                title = splitString[1].slice(IntRange(0, splitString[1].length-2))
+                title = splitString[1].slice(IntRange(0, splitString[1].length - 2))
             }
 
             if (title.contains("-")) {
@@ -41,19 +43,19 @@ class EpisodeItem(url: String?, title: String?) {
     /**
      * Getters / Setters
      */
-    fun getTitle() : String? {
+    fun getTitle(): String? {
         return title
     }
 
-    fun getVideoUrl() : String? {
-        return videoUrl
+    fun getVideoId(): String? {
+        return videoId
     }
 
-    fun getSeason() : Int? {
+    fun getSeason(): Int? {
         return seasonNumber
     }
 
-    fun getEpisodeNumber() : Int? {
+    fun getEpisodeNumber(): Int? {
         return episodeNumber
     }
 

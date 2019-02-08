@@ -25,6 +25,15 @@ class EpisodeAdapter(val episodes: List<EpisodeItem>, val context: Context?, val
 
     override fun onBindViewHolder(holder: EpisodeItemViewHolder, position: Int) {
         val item = episodes.get(position)
+
+        // Show season header for first element in list OR whenever the season number changes
+        if (position == 0 || item.getSeason() != episodes.get(position - 1).getSeason()) {
+            holder?.seasonHeader?.text = "Season ${item.getSeason()}";
+            holder?.seasonHeader.visibility = View.VISIBLE
+        } else {
+            holder?.seasonHeader.visibility = View.GONE
+        }
+
         holder?.title?.text = "Episode " + item.getEpisodeNumber() + ": " + item.getTitle()
         holder?.image?.setImageResource(R.drawable.default_background)
 
@@ -33,7 +42,7 @@ class EpisodeAdapter(val episodes: List<EpisodeItem>, val context: Context?, val
 
         holder?.cardView.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
-                println(item.getVideoUrl())
+                println(item.getVideoId())
                 if (mClickListener != null) {
                     mClickListener?.onEpisodeClicked(item)
                 }
@@ -52,5 +61,6 @@ class EpisodeItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val title = view.episodeTitle
     val image = view.characterProfileImage
     val cardView = view.cardView
+    val seasonHeader = view.seasonHeader
 }
 

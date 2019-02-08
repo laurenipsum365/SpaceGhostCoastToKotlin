@@ -3,10 +3,10 @@ package android.spaceghost.adapters
 import android.content.Context
 import android.spaceghost.R
 import android.spaceghost.models.EpisodeItem
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_item_episode.view.*
 
 class EpisodeAdapter(val episodes: List<EpisodeItem>, val context: Context?, val episodeClickListener: EpisodeClickListener) : RecyclerView.Adapter<EpisodeItemViewHolder>() {

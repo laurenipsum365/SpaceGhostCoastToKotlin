@@ -1,15 +1,16 @@
 import android.content.Intent
 import android.os.Bundle
 import android.spaceghost.R
+import android.spaceghost.activities.VideoPlayerActivity
 import android.spaceghost.activities.WebViewActivity
 import android.spaceghost.adapters.EpisodeAdapter
 import android.spaceghost.models.EpisodeItem
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_episode_list.*
 
 class EpisodeListFragment : Fragment(), EpisodeAdapter.EpisodeClickListener {
@@ -41,7 +42,7 @@ class EpisodeListFragment : Fragment(), EpisodeAdapter.EpisodeClickListener {
     }
 
     fun handleEpisodeClicked(episodeItem: EpisodeItem) {
-        val intent = Intent(context, WebViewActivity::class.java)
+        val intent = Intent(context, VideoPlayerActivity::class.java)
         intent.putExtra(WebViewActivity.VIDEO_OBJECT_URL, episodeItem.getVideoUrl())
         startActivity(intent)
     }

@@ -63,7 +63,7 @@ public class VideoPlayerActivity extends AppCompatActivity {
     }
 
     private void initYouTubePlayerView() {
-        initPlayerMenu();
+        //initPlayerMenu();
 
         // The player will automatically release itself when the activity is destroyed.
         // The player will automatically pause when the activity is stopped
@@ -120,7 +120,7 @@ public class VideoPlayerActivity extends AppCompatActivity {
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
                 fullScreenHelper.enterFullScreen(youTubePlayerView);
 
-                addCustomActionToPlayer(youTubePlayer);
+                //addCustomActionToPlayer(youTubePlayer);
             }
 
             @Override
@@ -128,7 +128,7 @@ public class VideoPlayerActivity extends AppCompatActivity {
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                 fullScreenHelper.exitFullScreen(youTubePlayerView);
 
-                removeCustomActionFromPlayer();
+                //removeCustomActionFromPlayer();
             }
         });
     }

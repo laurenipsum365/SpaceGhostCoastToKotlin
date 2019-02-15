@@ -59,4 +59,6 @@ dependencies {
     // Google API libs
     implementation 'com.google.apis:google-api-services-youtube:v3-rev206-1.25.0'
     implementation 'com.google.api-client:google-api-client-android:1.18.0-rc'
+
+    implementation 'com.google.android.gms:play-services-cast-framework:16.1.2'
 }

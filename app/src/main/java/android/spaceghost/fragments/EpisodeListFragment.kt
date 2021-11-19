@@ -12,6 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_episode_list.*
 
+
+// Here's Brak
+// https://www.youtube.com/watch?v=3_YLTEVMfUI
 class EpisodeListFragment : Fragment(), EpisodeAdapter.EpisodeClickListener {
 
     private val episodes: ArrayList<EpisodeItem> = ArrayList()
